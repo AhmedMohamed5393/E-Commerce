@@ -1,0 +1,73 @@
+<% include ../../../partials/header %>
+<div class="row d-flex justify-content-center mt-5 mb-3">
+    <% include ../../../partials/messages %>
+</div>
+<div class="d-flex justify-content-center p-1">
+    <div class="card col-lg-6 col-md-8 col-sm-10 col-xs-12 mt-5 mb-5" id='registerform'>
+        <div class="card-body">
+            <h4 class="card-title text-center mb-5">New Product</h4>
+            <form action='/product/new' method='post' class='form-group'>
+                <div class="form-group">
+                    <input type="text" class="form-control" 
+                           name="author" placeholder="Author Name">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" 
+                           name="productType" placeholder="Product Type">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" 
+                           name="brand" placeholder="Brand">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control"
+                           name="model" placeholder="Model">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control"
+                           name="screensize" placeholder="Screen Size in inches">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control"
+                           name="processor" placeholder="Processor">
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control"
+                           name="ram" placeholder="RAM in GB">
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control"
+                           name="storage" placeholder="Internal Storage in GB">
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control"
+                           name="quantity" placeholder="Quantity of this product">
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control"
+                           name="price" placeholder="Price in &euro;">
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control"
+                           name="discount" placeholder="Discount on price">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control"
+                           name="img" placeholder="Image">
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-outline-primary" 
+                               id='addproduct' value="Add">
+                    </div>
+                    <div class="form-group ml-2">
+                        <a href="javascript:history.back()" class="btn btn-outline-secondary">
+                           Cancel
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<% include ../../../partials/footer %>

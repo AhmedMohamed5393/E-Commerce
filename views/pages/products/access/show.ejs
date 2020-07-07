@@ -1,0 +1,50 @@
+<% include ../../../partials/header %>
+<div class="container col-lg-8 col-md-10 col-sm-11 col-12">
+  <div class="row d-flex justify-content-center mt-5 mb-3">
+    <% include ../../../partials/messages %>
+  </div>
+  <div class="row d-flex justify-content-center">
+    <% include ../finder/brandlist %>
+    <div class="card">
+      <div class="row">
+        <div class="d-flex justify-content-start col-lg-6 col-md-6">
+          <img class="card-img-top m-3 w-75 h-75" 
+               src="<%= product.img %>" alt="<%= product.model %>">
+        </div>
+        <div class="d-flex justify-content-end mt-5 col-lg-6 col-md-6">
+          <div class="card-body">
+            <h4 class="card-title text-center"><%= product.model %></h4>
+            <p class="card-text">
+               <ul class="list-inline text-center" style="font-size: 18px;">
+                  <li class="list-inline-item"><%= product.screensize %> inches</li><br>
+                  <li class="list-inline-item"><%= product.processor %></li><br>
+                  <li class="list-inline-item"><%= product.ram %> GB</li><br>
+                  <li class="list-inline-item"><%= product.storage %> GB</li><br>
+                  <li class="list-inline-item text-secondary"
+                      style="font-style: 22px; font-weight: bold;">
+                      &euro; <%= product.price * ((100 - product.discount) / 100) %>
+                  </li>
+               </ul>
+            </p>
+            <div class="d-flex justify-content-center mb-3">
+              <a href="/addtocart/<%= product._id %>" class="btn btn-success">
+                Add to Card
+              </a>
+            </div>
+            <% if(currentUser && currentUser.username == product.author){ %>
+              <div class="d-flex justify-content-center">
+                <div class="form-group mr-4">
+                  <a href="/product/<%= product._id %>/edit" class="btn btn-warning">Edit</a>
+                </div>
+                <form action="/product/<%= product._id %>?_method=DELETE" method="post">
+                  <button class="btn btn-danger">Delete</button>
+                </form>
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% include ../../../partials/footer %>

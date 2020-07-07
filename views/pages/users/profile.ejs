@@ -1,0 +1,118 @@
+<% include ../../partials/header %>
+<div class="container">
+  <div class="row d-flex justify-content-center p-1 mt-5 mb-5">
+    <div class="card col-lg-6 col-sm-10 col-xs-10 col-12">
+        <div class="card-body">
+            <h4 class="card-title text-center">User Profile</h4>
+            <div class="card-text m-3">
+                <table class="table table-borderless col-*-8">
+                    <tbody>
+                      <tr>
+                        <th scope="row col-sm-10 col-xs-12 col-12">User Name</th>
+                        <td>
+                          <p class="text-break text-center">
+                            <%= currentUser.username %>
+                          </p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row col-sm-10 col-xs-12 col-12">Email Address</th>
+                        <td>
+                          <p class="text-break text-center">
+                            <%= currentUser.email %>
+                          </p>
+                        </td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>              
+            <div class="d-flex justify-content-center mt-3">
+                <a href="javascript:history.back()" class="btn btn-primary">Go Back</a>
+            </div>
+        </div>
+    </div>
+  </div>
+  <% if(orders.length > 0){ %>
+    <div class="row d-flex justify-content-center" style="margin-bottom: 15%;">
+      <div id="accordion" role="tablist" class="col-*-10 w-100">
+        <div class="card col-*-10">
+          <div class="card-header" role="tab" id="headingOne">
+            <h5 class="mb-0">
+              <a data-toggle="collapse" href="#collapseOne" 
+                 aria-expanded="false" aria-controls="collapseOne"
+                 class="collapsed text-decoration-none d-flex justify-content-center">
+                 My Orders
+              </a>
+            </h5>
+          </div>
+          <div id="collapseOne" class="collapse" role="tabpanel" 
+               aria-labelledby="headingOne">
+            <div class="card-body">
+              <ul class="list-group">
+                <% orders.forEach((order) => { %>
+                <li class="list-group-item m-2">
+                  <div id="accordion" role="tablist" class="col-*-10 w-100">
+                    <div class="card col-*-10">
+                      <div class="card-header" role="tab" id="headingOne">
+                        <h5 class="mb-0">
+                          <a data-toggle="collapse" href="#collapseOne" 
+                             aria-expanded="false" aria-controls="collapseOne"
+                             class="collapsed text-decoration-none
+                                    d-flex justify-content-center">
+                             Order number <%= orders.indexOf(order) + 1 %>   
+                             With total cost: <%= order.cart.totalprice %>
+                          </a>
+                        </h5>
+                      </div>
+                      <div id="collapseOne" class="collapse" role="tabpanel" 
+                           aria-labelledby="headingOne">
+                        <div class="card-body">
+                          <ul class="list-group">
+                            <% order.items.forEach((orderitem) => { %>
+                            <li class="list-group-item m-2">
+                              <div class="row">
+                                <div class="d-flex justify-content-start col-lg-6">
+                                  <img src="<%= orderitem.item.img %>" class="img-fluid m-2" 
+                                   style="height: 120px;" alt="Responsive image">
+                                  <article class="mt-5 col-lg-6">
+                                    <h4 class="text-center"><%= orderitem.item.model %></h4>
+                                    <ul class="list-inline text-center mb-2"
+                                        style="font-size: 14px;">
+                                      <li class="list-inline-item text-secondary">
+                                        &euro; 
+                                        <%= orderitem.item.price * 
+                                           (100 - orderitem.item.discount)
+                                            / 100 %>
+                                      </li>
+                                      <li class="list-inline-item text-secondary">
+                                        Quantity: <%= orderitem.quantity %>
+                                      </li>
+                                    </ul>
+                                  </article>
+                                </div>
+                              </div>
+                            </li>
+                            <% }); %>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <% }); %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% } else { %>
+      <div class="row d-flex justify-content-center m-2">
+        <p class="text-center font-weight-bolder text-info"
+           style="font-size: 24px;">
+           You haven't make any orders yet!
+        </p>
+      </div>
+    <% } %>
+  </div>
+</div>
+<% include ../../partials/footer %>

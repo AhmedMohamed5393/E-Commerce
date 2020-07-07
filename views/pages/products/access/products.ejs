@@ -1,0 +1,123 @@
+<% include ../../../partials/header %>
+<div class="container">
+    <div class="row d-flex justify-content-center m-2">
+      <% include ../../../partials/messages %>
+      <div id="success" class="alert alert-success alert-dismissible fade show
+                               <% if(noMessages){ %>invisible<% } %>">
+          <%= successMgs %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <% if(noMatch !== null){ %>
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+          <p class="text-center"><%= noMatch %></p>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <% } %>
+    </div>
+    <div class="row main d-flex justify-content-center">
+      <% include ../finder/brandlist %>
+      <% if(products.length === 0){ %>
+        <p class="text-center">No products found yet !</p>
+      <% }else{ %>
+        <% products.forEach((product) => {
+            if(product.quantity !== 0){ %>
+              <a href="/product/<%= product._id %>/show"
+                 class="text-decoration-none">
+                <div class="card col-xl-2 col-lg-2 col-md-3 
+                            col-sm-4 col-xs-6 col-6 mb-3 mr-2 ml-3">
+                  <img class="card-img-top mt-3 pr-3 pl-3" style="height: 120px;"
+                       src="<%= product.img %>" alt="Card image cap">
+                  <div class="card-body">
+                    <h4 class="card-title text-center"><%= product.model %></h4>
+                    <article class="card-text">
+                        <ul class="list-inline text-center mb-2"
+                            style="font-size: 14px;">
+                            <li class="list-inline-item text-secondary">
+                              &euro; 
+                              <%= product.price * ((100 - product.discount) / 100) %>
+                            </li>
+                            <li class="list-inline-item text-secondary">
+                              -<%= product.discount %>%
+                            </li>
+                            <li class="list-inline-item text-secondary" 
+                                style="text-decoration: line-through;">
+                                &euro; <%= product.price %>
+                            </li>
+                        </ul>
+                    </article>
+                    <div class="d-flex justify-content-center mb-1">
+                      <a href="/product/<%= product._id %>/show" 
+                         class="btn btn-primary pr-2 pl-2 pt-1 pb-1
+                                text-decoration-none">
+                        More Info
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            <% }
+          });
+      } %>
+    </div>
+    <div class="row d-flex justify-content-center m-2">
+      <p class="lead" style="font-size: 20px;"><%= products.length %>
+        product<% if(products.length > 1){ %>s are<% }else{ %> is<% } %> found</p>
+    </div>
+    <div class="row d-flex justify-content-center">
+      <% if (pages > 1) { %>
+        <ul class="pagination">
+          <% if (current == 1) { %>
+            <li class="page-item disabled">
+              <a class="page-link" href="/products/1" tabindex="-1">Previous</a>
+            </li>
+          <% } else { %>
+            <li class="page-item">
+              <a class="page-link" href="/products/<%= current - 1 %>">Previous</a>
+            </li>
+          <% } %>
+          <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+          <% if (i !== 1) { %>
+            <li class="page-item disabled">
+              <a class="page-link">...</a>
+            </li>
+          <% } %>
+          <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+              <% if (i == current) { %>
+                <li class="page-item active">
+                  <a class="page-link" href="/products/<%= i %>">
+                    <%= i %> <span class="sr-only">(current)</span>
+                  </a>
+                </li>
+              <% } else { %>
+                <li class="page-item">
+                  <a class="page-link" href="/products/<%= i %>">
+                    <%= i %>
+                  </a>
+                </li>
+              <% } %>
+              <% if (i == Number(current) + 4 && i < pages) { %>
+                <li class="page-item disabled">
+                  <a class="page-link">...</a>
+                </li>
+              <% } %>
+          <% } %>
+          <% if (current == pages) { %>
+            <li class="page-item disabled">
+              <a class="page-link" href="/products/<%= pages %>" tabindex="-1">
+                Next
+              </a>
+            </li>
+          <% } else { %>
+            <li class="page-item">
+              <a class="page-link" href="/products/<%= current + 1 %>">Next</a>
+            </li>
+          <% } %>
+        </ul>
+      <% } %>
+    </div>
+</div>
+<% include ../../../partials/footer %>
