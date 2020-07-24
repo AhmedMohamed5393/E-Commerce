@@ -25,7 +25,7 @@ module.exports = {
             currency: "eur",
             source: req.body.stripeToken,
             description: "Test Charge"
-        }).then(charge => {
+        }, (error, charge) => {
             var order = new Order({
                 user: req.user,
                 cart: cart,
@@ -34,19 +34,19 @@ module.exports = {
                 name: req.body.name,
                 paymentId: charge.id
             });
-            order.save().then(result => {
+            if(error){
+                req.flash('error', err.message);
+                return res.redirect('back');
+            }
+            order.save((err, result) => {
+                if(err){
+                    req.flash('error', err.message);
+                    return res.redirect('back');
+                }
                 req.flash('success', 'Congradulations you paid for your products!');
                 req.session.cart = null;
                 res.redirect('/');
-            }).catch(error => {
-                console.log(error.message);
-                req.flash('error', error.message);
-                return res.redirect('back');
             });
-        }).catch(err => {
-            console.log(err.message);
-            req.flash('error', err.message);
-            return res.redirect('back');
         });
     }
 }
